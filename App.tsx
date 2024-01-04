@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { useState, type PropsWithChildren } from "react";
 import {
   ImageSourcePropType,
@@ -14,12 +13,8 @@ import DiceThree from "./assets/three.png";
 import DiceFour from "./assets/four.png";
 import DiceFive from "./assets/five.png";
 import DiceSix from "./assets/six.png";
-import * as Haptics from 'expo-haptics';
-
-const options = {
-  enableVibrateFallback: true,
-  ignoreAndroidSystemSettings: false,
-};
+import * as Haptics from "expo-haptics";
+import { useFonts } from "expo-font";
 
 type DiceProps = PropsWithChildren<{
   imageUrl: ImageSourcePropType;
@@ -34,6 +29,9 @@ const Dice = ({ imageUrl }: DiceProps) => {
 };
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    PressStart: require("./assets/fonts/PressStart2P-Regular.ttf"),
+  });
   const [diceImage, setDiceImage] = useState<ImageSourcePropType>(DiceOne);
 
   const rollDiceOnTap = () => {
@@ -63,14 +61,14 @@ export default function App() {
         break;
     }
 
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   return (
     <View style={styles.container}>
       <Dice imageUrl={diceImage} />
       <Pressable onPress={rollDiceOnTap}>
-        <Text style={styles.rollDiceBtn}>Roll the dice</Text>
+        <Text style={styles.rollDiceBtn}>ROLL</Text>
       </Pressable>
     </View>
   );
@@ -79,10 +77,19 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
   },
-  diceImage: {},
-  rollDiceBtn: {},
+  diceImage: {
+    width: 200,
+    height: 200,
+  },
+  rollDiceBtn: {
+    fontFamily: "PressStart",
+    fontSize: 40,
+    marginBottom: 100,
+    marginTop: 210,
+  },
 });
