@@ -8,12 +8,18 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import DiceOne from "../assets/one.png";
-import DiceTwo from "../assets/two.png";
-import DiceThree from "../assets/three.png";
-import DiceFour from "../assets/four.png";
-import DiceFive from "../assets/five.png";
-import DiceSix from "../assets/six.png";
+import DiceOne from "./assets/one.png";
+import DiceTwo from "./assets/two.png";
+import DiceThree from "./assets/three.png";
+import DiceFour from "./assets/four.png";
+import DiceFive from "./assets/five.png";
+import DiceSix from "./assets/six.png";
+import * as Haptics from 'expo-haptics';
+
+const options = {
+  enableVibrateFallback: true,
+  ignoreAndroidSystemSettings: false,
+};
 
 type DiceProps = PropsWithChildren<{
   imageUrl: ImageSourcePropType;
@@ -56,6 +62,8 @@ export default function App() {
         setDiceImage(DiceOne);
         break;
     }
+
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
   };
 
   return (
